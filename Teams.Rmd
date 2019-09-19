@@ -6,6 +6,40 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+#1
+choco <-
+  read.csv("https://raw.githubusercontent.com/lbchu/ds202_labs/master/choco.csv")
+head(choco)
+
+recent_rating = choco[choco$Review.Date > 2011, ]
+# create a dataframe called recent_rating which is part of dataframe choco. It is contained reveiw data after 2011 from dataset choco.
+
+unique(recent_rating$Company.Location)
+# listed all contries existed in the recent_rating dataframe without repeated by appearing sequence. Level 61 means there are 61 different countries, however, some of them are not existed.
+
+recent_rating$Company.Location = droplevels(recent_rating$Company.Location)
+# it is used to drop unusual levels from Company.Location in dataframe recent_rating
+
+head(recent_rating)
+# get the several top data of the dataset recent_rating.
+
+cross_table = table(recent_rating$Review.Date, recent_rating$Company.Location)
+cross_table
+#create a table to show different Company.Location by the Review.Date(2012,2013,2014,2015,2016,2017))
+
+which(
+  cross_table[1, ] != 0 &
+    cross_table[2, ] != 0 &
+    cross_table[3, ] != 0 & cross_table[4, ] != 0 & cross_table[5, ] != 0
+)
+# choose several sepcific data which satisfied all years did have zero data in a certain country.
+
+france_recent = subset(recent_rating, Company.Location == 'France')
+uk_recent = subset(recent_rating, Company.Location == 'U.K.')
+germany_recent = subset(recent_rating, Company.Location == 'Germany')
+#create a subdataframe called france_recent which contains all the data whose Company.Location is France.
+#create a subdataframe called uk_recent which contains all the data whose Company.Location is UK.
+#create a subdataframe called germany_recent which contains all the data whose Company.Location is Germany.
 
 #3.
 ```{r}
