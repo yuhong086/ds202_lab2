@@ -1,0 +1,70 @@
+---
+title: "team"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#3.
+```{r}
+choco <- read.csv("https://raw.githubusercontent.com/lbchu/ds202_labs/master/choco.csv")
+library(plyr)
+unique(choco$Review.Date)
+Q3 <- count(choco$Rating, c("choco$Review.Date", "choco$Rating"))
+sum(Q3$freq[Q3$choco.Review.Date == 2006])
+sum(Q3$freq[Q3$choco.Review.Date == 2007])
+sum(Q3$freq[Q3$choco.Review.Date == 2008])
+sum(Q3$freq[Q3$choco.Review.Date == 2009])
+sum(Q3$freq[Q3$choco.Review.Date == 2010])
+sum(Q3$freq[Q3$choco.Review.Date == 2011])
+sum(Q3$freq[Q3$choco.Review.Date == 2012])
+sum(Q3$freq[Q3$choco.Review.Date == 2013])
+sum(Q3$freq[Q3$choco.Review.Date == 2014])
+sum(Q3$freq[Q3$choco.Review.Date == 2015])
+sum(Q3$freq[Q3$choco.Review.Date == 2016])
+sum(Q3$freq[Q3$choco.Review.Date == 2017])
+```
+
+
+
+
+#4  
+```{r}
+Q4 <- table(choco$Rating, choco$Company.Location)
+Q4_table1 <- colSums(Q4)
+sort(Q4_table1, decreasing = TRUE)
+com1 <- cbind(Q4[, "U.S.A."], Q4[, "France"], Q4[, "Canada"])
+com1
+Q4_table2 <- data.frame(com1)
+Q4_table2
+com2 <- sort(unique(choco$Rating), decreasing = FALSE)
+par(mfrow = c(2, 2))
+plot(
+  com2,
+  Q4_table2$X1,
+  pch = 10,
+  col = 'blue',
+  xlim = c(1, 5),
+  xlab = "rating",
+  ylab = 'USA'
+)
+plot(
+  com2,
+  Q4_table2$X2,
+  pch = 2,
+  col = 'orange',
+  xlab = "rating",
+  ylab = 'France'
+)
+plot(
+  com2,
+  Q4_table2$X3,
+  pch = 18,
+  col = 'red',
+  xlab = "rating",
+  ylab = 'Canada'
+)
+```
+
