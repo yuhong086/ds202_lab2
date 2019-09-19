@@ -10,21 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #3.
 ```{r}
 choco <- read.csv("https://raw.githubusercontent.com/lbchu/ds202_labs/master/choco.csv")
-library(plyr)
-unique(choco$Review.Date)
-Q3 <- count(choco$Rating, c("choco$Review.Date", "choco$Rating"))
-sum(Q3$freq[Q3$choco.Review.Date == 2006])
-sum(Q3$freq[Q3$choco.Review.Date == 2007])
-sum(Q3$freq[Q3$choco.Review.Date == 2008])
-sum(Q3$freq[Q3$choco.Review.Date == 2009])
-sum(Q3$freq[Q3$choco.Review.Date == 2010])
-sum(Q3$freq[Q3$choco.Review.Date == 2011])
-sum(Q3$freq[Q3$choco.Review.Date == 2012])
-sum(Q3$freq[Q3$choco.Review.Date == 2013])
-sum(Q3$freq[Q3$choco.Review.Date == 2014])
-sum(Q3$freq[Q3$choco.Review.Date == 2015])
-sum(Q3$freq[Q3$choco.Review.Date == 2016])
-sum(Q3$freq[Q3$choco.Review.Date == 2017])
+Rating_Year <- table(choco$Rating, choco$Review.Date)
+barplot(colSums(Rating_Year))
 ```
 
 
@@ -54,7 +41,7 @@ plot(
   com2,
   Q4_table2$X2,
   pch = 2,
-  col = 'orange',
+  col = 'red',
   xlab = "rating",
   ylab = 'France'
 )
@@ -62,7 +49,7 @@ plot(
   com2,
   Q4_table2$X3,
   pch = 18,
-  col = 'red',
+  col = 'purple',
   xlab = "rating",
   ylab = 'Canada'
 )
