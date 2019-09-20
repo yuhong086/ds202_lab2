@@ -1,0 +1,27 @@
+#1
+```{r}
+choco <-
+  read.csv("https://raw.githubusercontent.com/lbchu/ds202_labs/master/choco.csv")
+head(choco)
+
+hist(choco$Rating)
+boxplot((choco$Rating))
+
+```
+
+Based on the histogram, the rating is left-skewed with 5 outliers(from the boxplot).
+
+#2
+```{r}
+
+plot(choco$Cocoa.Pct~choco$Rating)
+```
+Based on the plot, there is no obvious relationship between rating and cacao percentage.
+
+#3
+```{r}
+typeof(choco$Company.Location)
+
+```
+
+It is a integer.

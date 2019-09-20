@@ -40,7 +40,9 @@ germany_recent = subset(recent_rating, Company.Location == 'Germany')
 #create a subdataframe called france_recent which contains all the data whose Company.Location is France.
 #create a subdataframe called uk_recent which contains all the data whose Company.Location is UK.
 #create a subdataframe called germany_recent which contains all the data whose Company.Location is Germany.
-
+#2
+use different pch vaule such as pch =2, pch =10
+the different plot of the graph could make people see more clearly 
 #3.
 ```{r}
 choco <- read.csv("https://raw.githubusercontent.com/lbchu/ds202_labs/master/choco.csv")
@@ -88,4 +90,4 @@ plot(
   ylab = 'Canada'
 )
 ```
-
+#5 which counrty has the most high rating and lowest rating 
