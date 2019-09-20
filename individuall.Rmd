@@ -1,0 +1,17 @@
+#1
+```{r}
+choco <-
+  read.csv("https://raw.githubusercontent.com/lbchu/ds202_labs/master/choco.csv")
+
+plot(choco$Review.Date,choco$Cocoa.Pct, xlab = "Ratings", ylab = "Cocoa Percentage", pch = 3, cex=3) # creates a plot with review date on x-axis and Cocoa Percentage of y-axis. The symbol of points is set to be a triangle (pch=3) and the size of the points is adjusted to be larger (cex=3).
+```
+#2
+```{r}
+plot(choco$Cocoa.Pct~choco$Rating)
+#there are no realtionship between rating and pct ,due to there are no plots comes with 
+```
+#3
+```{r}
+choco$Company.Locatio
+#interger 
+```
