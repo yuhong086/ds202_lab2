@@ -2,6 +2,10 @@
 title: "team"
 output: html_document
 ---
+# yuhong 
+# Haoxuan
+#github usename yuhong086
+#github repo-ds202-lab2
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
