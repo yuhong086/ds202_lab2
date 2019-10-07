@@ -1,0 +1,116 @@
+---
+title: 'DS 202 - Lab 3: Exploring Happiness'
+subtitle: "Due: Thursday 10/03/2019 by 10 pm"
+author: "Lynna Chu"
+
+date: "09/26/2019"
+output: html_document
+---
+
+
+
+```{r}  
+ HAPPY <- readRDS("HAPPY.rds")
+head(HAPPY)
+library("ggplot2")
+library("dplyr")
+```
+```{r}
+HAPPY[HAPPY=="IAP"|HAPPY=="DK"|HAPPY=="NA"] <- NA
+head(HAPPY)
+```
+2. Check the type of the variable and cast into the right type (factor variable for categorical variables). For age, change "89 OR OLDER" to 89 and assume the variable should be numeric. (Hint: see `?as.character` and `?as.numeric`)
+```{r}
+HAPPY$AGE[HAPPY$AGE=="89 OR OLDER"] <- 89
+HAPPY$AGE <- as.numeric(HAPPY$AGE)
+head(HAPPY)
+str(HAPPY)
+```
+
+```{r}
+HAPPY$HAPPY <- as.factor(HAPPY$HAPPY)
+HAPPY$SEX <- as.factor(HAPPY$SEX)
+HAPPY$MARITAL <- as.factor(HAPPY$MARITAL)
+HAPPY$DEGREE <- as.factor(HAPPY$DEGREE)
+HAPPY$FINRELA <- as.factor(HAPPY$FINRELA)
+HAPPY$HEALTH <- as.factor(HAPPY$HEALTH)
+HAPPY$PARTYID <- as.factor(HAPPY$PARTYID)
+HAPPY$POLVIEWS <- as.factor(HAPPY$POLVIEWS)
+HAPPY$YEAR <- as.numeric(HAPPY$YEAR)
+#HAPPY <- HAPPY%>%
+  #mutate_if(is.character, as.factor)%>%
+  #mutate_if(~is.integer(.) | is.double(.), as.numeric)
+head(HAPPY)
+str(HAPPY)
+```
+3. Bring all levels of factors into a sensible order. For marital you could e.g. order the levels according to average age. 
+```{r}
+HAPPY <- HAPPY %>%
+  mutate(HAPPY = factor(HAPPY, levels=c("NOT TOO HAPPY", "PRETTY HAPPY", "VERY HAPPY"))) %>%
+  mutate(DEGREE = factor(DEGREE, levels=c("LT HIGH SCHOOL", "HIGH SCHOOL", "JUNIOR COLLEGE", "BACHELOR", "GRADUATE" ))) %>%
+  mutate(SEX = factor(SEX, levels=c("FEMALE", "MALE"))) %>%
+  mutate(FINRELA = factor(FINRELA, levels=c("FAR BELOW AVERAGE", "BELOW AVERAGE", "AVERAGE", "ABOVE AVERAGE", "FAR ABOVE AVERAGE"))) %>%
+  mutate(HEALTH = factor(HEALTH, levels=c("POOR", "FAIR", "GOOD", "EXCELLENT"))) %>%
+  mutate(PARTYID = factor(PARTYID, levels=c("STRONG REPUBLICAN", "NOT STR REPUBLICAN", "IND,NEAR REP", "INDEPENDENT", "IND,NEAR DEM", "NOT STR DEMOCRAT", "STRONG DEMOCRAT", "OTHER PARTY"))) %>%
+  mutate(POLVIEWS = factor(POLVIEWS, levels=c("EXTRMLY CONSERVATIVE", "SLGHTLY CONSERVATIVE", "CONSERVATIVE", "MODERATE", "LIBERAL", "SLIGHTLY LIBERAL", "EXTREMELY LIBERAL")))
+#MARITAL column has no obvious order
+#sort by average age of aggregated/grouped MARITAL value
+subset_marital<- aggregate(AGE ~ MARITAL, data = HAPPY, mean) %>%
+  arrange(AGE)
+HAPPY <- mutate(HAPPY, MARITAL = factor(MARITAL, as.vector(subset_marital$MARITAL)))
+lapply(HAPPY, levels)
+```
+Use `ggplot2` to create the plots. Your exploration should make use all elements of the grammar of graphics: mappings (`color`, `fill`, and `size` at least), different `geom`s (4 at least), scales, coordinates (eg `coord_flip`), facet, and theme (eg setting axis labels and title). **The final plot doesn't need to include all these elements, but they should be part of your exploration**. For each investigation, create an appropriate visualization and write a paragraph to describe it.
+
+1. Investigate the distributions of 2 different variables. 
+2. Investigate the relationship between happiness and three other variables in the data.
+3. What do you learn from the data set? Write one or two paragraphs to describe.
+
+```{r}
+plot1 <- ggplot(data=HAPPY,aes(HAPPY))+geom_histogram(fill="blue",stat="count")+labs(x=" Level",y="NUMBER",title="Histogram of happiness levels")
+print(plot1)
+```    
+```{r}
+plot1 <- ggplot(data=HAPPY,aes(AGE))+geom_histogram(fill="RED",stat="count")+labs(x=" AGE",y="NUMBER",title="Histogram of AGE levels")
+print(plot1)
+```    
+2. Investigate the relationship between happiness and three other variables in the data.
+```{r}
+subset_happy_marriage <- HAPPY %>% select(HAPPY, MARITAL)
+subset_happy_marriage 
+```
+```{r}
+plot1b <- ggplot(subset_happy_marriage, aes(x=MARITAL, fill=HAPPY)) + 
+  geom_histogram(stat="count") + ylab("Count")+ggtitle("Marital AND happiness")
+print(plot1b)
+```
+
+```{r}    
+
+subset_happy_age <- HAPPY %>% select(HAPPY, AGE)
+```
+```{r}    
+
+plot2 <- ggplot(subset_happy_age, aes(x=AGE, y=HAPPY),shape=cut) + 
+  geom_line( aes(color=HAPPY) ) +ggtitle("happy_age")
+print(plot2)+ geom_boxplot()
+```    
+```{r}
+subset_happy_sex <- HAPPY %>% select(HAPPY, SEX)
+plot3 <- ggplot(subset_happy_sex, aes(x=SEX, fill=HAPPY)) + 
+  geom_bar() + ylab("ratio")+ ggtitle("happy_sex")
+print(plot3)
+```    
+3. What do you learn from the data set? Write one or two paragraphs to describe.
+
+#the happy range deponds on a lot of factor,most survey are adult deponds on degree, sex, and marriage , most female is happy than male, 
+#most of male were happy after have good income ,
+
+    
+    
+    
+    
+    
+    
+    
+
